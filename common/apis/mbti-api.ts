@@ -4,27 +4,29 @@ import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { MbtiQuestionData, MbtiResultData } from "@/common/types/data";
 
 export const getMbtiResult = async (mbti: string) => {
-  // const result: IResultTypes = await axios
-  //   .get(`/mbti-slime/api/mbti-result?mbti=${mbti}`)
-  //   .then(({ data }) => {
-  //     return data[0];
-  //   });
+  const result: IResultTypes = await axios
+    .get(`${process.env.NEXT_PUBLIC_SERVER_URL}/result/${mbti}`)
+    .then(({ data }) => {
+      return data;
+    });
 
-  let result: IResultTypes[] = [];
-  if (mbti === "all") {
-    result = MbtiResultData;
-  } else {
-    result = MbtiResultData.filter(m => m.mbti === String(mbti));
-  }
+  // let result: IResultTypes[] = [];
+  //
+  // if (mbti === "all") {
+  //   result = MbtiResultData;
+  // } else {
+  //   result = MbtiResultData.filter(m => m.mbti === String(mbti));
+  // }
 
+  console.log(result);
   return result;
 };
 
 export const useGetMbtiResult = (
   mbti: string,
-  options?: UseQueryOptions<IResultTypes[], Error, IResultTypes[]>,
+  options?: UseQueryOptions<IResultTypes, Error, IResultTypes>,
 ) =>
-  useQuery<IResultTypes[], Error, IResultTypes[]>({
+  useQuery<IResultTypes, Error, IResultTypes>({
     queryKey: ["mbti-result", mbti],
     queryFn: () => getMbtiResult(mbti),
     enabled: !!String(mbti),

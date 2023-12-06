@@ -46,10 +46,10 @@ const ResultPage = () => {
 
   //트위터 공유
   const onClickTwitter = () => {
-    if (typeof window != "undefined" && data && data?.length > 0) {
+    if (typeof window != "undefined" && data) {
       const url = window.location.protocol + "//" + window.location.host;
 
-      const text = `${data[0].summary} ${data[0].mbti}, ${data[0].titleName}입니다. 나를 닮은 슬라임은 뭘까요? mbti 슬라임 테스트 하러 가기! 👉`;
+      const text = `${data.summary} ${data.mbti}, ${data.titleName}입니다. 나를 닮은 슬라임은 뭘까요? mbti 슬라임 테스트 하러 가기! 👉`;
 
       window.open(
         "https://twitter.com/intent/tweet?text=" +
@@ -110,14 +110,14 @@ const ResultPage = () => {
       >
         {/*쿠팡 보고난 후*/}
         <ResultWrap coupangFlag={coupangFlag}>
-          <ResultTitle>{data ? data[0].titleName : null}</ResultTitle>
+          <ResultTitle>{data ? data.titleName : null}</ResultTitle>
           <ResultImg
-            src={`/static/image/result/${data ? data[0].mbti : "no_img"}.png`}
+            src={`/static/image/result/${data ? data.mbti : "no_img"}.png`}
             alt="result_img"
           />
           <ResultSummary>
-            {data ? data[0].summary : null} &ldquo;
-            {data ? data[0].titleName : null}
+            {data ? data.summary : null} &ldquo;
+            {data ? data.titleName : null}
             &rdquo;
           </ResultSummary>
           <p
@@ -128,7 +128,7 @@ const ResultPage = () => {
               word-break: keep-all;
             `}
           >
-            {data ? data[0].description : null}
+            {data ? data.description : null}
           </p>
           <div
             css={css`
@@ -187,12 +187,12 @@ const ResultPage = () => {
             <ShareButton
               label={"카카오톡 공유"}
               onClick={() => {
-                if (data && data.length > 0) {
+                if (data) {
                   shareKakao(
                     router.query.mbti as string,
-                    `/static/image/result/${data[0].mbti}.png`,
-                    data[0].summary,
-                    data[0].titleName,
+                    `/static/image/result/${data.mbti}.png`,
+                    data.summary,
+                    data.titleName,
                   );
                 }
               }}
